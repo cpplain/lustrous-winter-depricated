@@ -27,4 +27,16 @@ RSpec.describe ResourcesController, type: :controller do
       expect(Resource.last.name).to eq('Name')
     end
   end
+
+  describe 'PUT resources#update' do
+    it 'should update a resource in the database' do
+      resource = FactoryGirl.create(:resource)
+      put :update, params: { id: resource.id, resource: { name: 'New Name' } }
+      expect(response).to have_http_status(:success)
+      response_value = ActiveSupport::JSON.decode(@response.body)
+      expect(response_value['name']).to eq('New Name')
+      resource.reload
+      expect(resource.name).to eq('New Name')
+    end
+  end
 end
