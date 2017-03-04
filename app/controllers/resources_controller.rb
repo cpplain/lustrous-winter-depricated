@@ -1,7 +1,11 @@
 class ResourcesController < ApplicationController
+  def index
+    render json: Resource.all
+  end
+
   def create
     resource = Resource.create(resource_params)
-    render json: resource 
+    render json: resource
   end
 
   private
