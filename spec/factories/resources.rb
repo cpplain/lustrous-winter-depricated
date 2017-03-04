@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :resource do
-    name "MyString"
-    description "MyText"
+    name 'Name'
+    description 'Description'
   end
 end
