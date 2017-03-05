@@ -39,4 +39,13 @@ RSpec.describe ResourcesController, type: :controller do
       expect(resource.name).to eq('New Name')
     end
   end
+
+  describe 'DELETE resources#destroy' do
+    it 'should delete a resource from the database' do
+      resource = FactoryGirl.create(:resource)
+      delete :destroy, params: { id: resource.id }
+      expect(response).to have_http_status(:success)
+      expect(Resource.find_by_id(resource.id)).to eq(nil)
+    end
+  end
 end
