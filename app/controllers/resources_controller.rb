@@ -9,9 +9,14 @@ class ResourcesController < ApplicationController
   end
 
   def update
-    resource = Resource.find(params[:id]) 
+    resource = Resource.find(params[:id])
     resource.update_attributes(resource_params)
     render json: resource
+  end
+
+  def destroy
+    resource = Resource.find(params[:id])
+    resource.destroy
   end
 
   private
