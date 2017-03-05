@@ -24,6 +24,6 @@ class ResourcesController < ApplicationController
   end
 
   def current_resource
-    @current_course ||= Resource.find(params[:id])
+    @current_resource ||= Resource.find(params[:id])
   end
 end
