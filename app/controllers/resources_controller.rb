@@ -9,19 +9,21 @@ class ResourcesController < ApplicationController
   end
 
   def update
-    resource = Resource.find(params[:id])
-    resource.update_attributes(resource_params)
-    render json: resource
+    current_resource.update_attributes(resource_params)
+    render json: current_resource
   end
 
   def destroy
-    resource = Resource.find(params[:id])
-    resource.destroy
+    current_resource.destroy
   end
 
   private
 
   def resource_params
     params.require(:resource).permit(:name, :description)
+  end
+
+  def current_resource
+    @current_course ||= Resource.find(params[:id])
   end
 end
