@@ -1,15 +1,15 @@
 require 'rails_helper'
 
 # Specs in this file have access to a helper object that includes
-# the ResourcesHelper. For example:
+# the LearningResourcesHelper. For example:
 #
-# describe ResourcesHelper do
+# describe LearningResourcesHelper do
 #   describe "string concat" do
 #     it "concats two strings with spaces" do
 #       expect(helper.concat_strings("this","that")).to eq("this that")
 #     end
 #   end
 # end
-RSpec.describe ResourcesHelper, type: :helper do
+RSpec.describe LearningResourcesHelper, type: :helper do
 
 end
