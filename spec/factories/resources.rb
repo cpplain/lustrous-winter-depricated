@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :learning_resource do
+  factory :resource do
     name 'Name'
     description 'Description'
   end

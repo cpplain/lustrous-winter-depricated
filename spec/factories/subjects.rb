@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :resource_category do
+  factory :subject do
     name 'Name'
     parent nil
   end
