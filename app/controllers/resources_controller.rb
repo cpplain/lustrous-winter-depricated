@@ -9,6 +9,11 @@ class ResourcesController < ApplicationController
     render_error(:unprocessable_entity, resource.errors)
   end
 
+  def show
+    return render_success(:ok, current_resource) if current_resource
+    render_error(:not_found)
+  end
+
   def update
     current_resource.update_attributes(resource_params)
     return render_success(:ok, current_resource) if current_resource.valid?

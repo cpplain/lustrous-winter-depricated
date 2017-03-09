@@ -55,6 +55,34 @@ RSpec.describe ResourcesController, type: :controller do
     end
   end
 
+  describe 'GET resources#show' do
+    context 'without errrors' do
+      before do
+        @resource = FactoryGirl.create(:resource)
+        get :show, params: { id: @resource.id }
+        @json = JSON.parse(response.body)
+      end
+
+      it 'returns resources in the response body' do
+        expect(@json['id']).to eq(@resource.id)
+      end
+
+      it 'returns HTTP status ok' do
+        expect(response).to have_http_status(:ok)
+      end
+    end
+
+    context 'with errors' do
+      before do
+        get :show, params: { id: 'no_id' }
+      end
+
+      it 'returns HTTP status not found' do
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+  end
+
   describe 'PATCH resources#update' do
     context 'without errors' do
       before do
