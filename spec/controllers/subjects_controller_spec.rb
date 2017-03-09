@@ -1,6 +1,24 @@
 require 'rails_helper'
 
 RSpec.describe SubjectsController, type: :controller do
+  describe 'GET resources#index' do
+    before do
+      @subject1 = FactoryGirl.create(:subject)
+      @subject2 = FactoryGirl.create(:subject)
+      get :index
+      json = JSON.parse(response.body)
+      @subject_ids = json.collect { |subject| subject['id'] }
+    end
+
+    it 'returns all subjects in the response body' do
+      expect(@subject_ids).to eq([@subject1.id, @subject2.id])
+    end
+
+    it 'returns HTTP status ok' do
+      expect(response).to have_http_status(:ok)
+    end
+  end
+
   describe 'POST subjects#create' do
     context 'without errors' do
       before do

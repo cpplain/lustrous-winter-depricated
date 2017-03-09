@@ -1,4 +1,8 @@
 class SubjectsController < ApplicationController
+  def index
+    render_success(:ok, Subject.order(name: :asc))
+  end
+
   def create
     subject = Subject.create(subject_params)
     return render_success(:created, subject) if subject.valid?
