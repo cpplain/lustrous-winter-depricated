@@ -1,26 +1,29 @@
 class SubjectsController < ApplicationController
   def create
-    parent = Subject.find_by_id(subject_params[:parent])
-    subject = Subject.create(name: subject_params[:name], parent: parent)
-    return render json: subject, status: :created if subject.valid?
-    render_errors(subject)
+    subject = Subject.create(subject_params)
+    return render_success(:created, subject) if subject.valid?
+    render_error(:unprocessable_entity, subject.errors)
   end
 
   def update
-    subject = Subject.find(params[:id])
-    parent = Subject.find_by_id(subject_params[:parent]) if subject_params[:parent]
-    subject.update(name: subject_params[:name], parent: parent)
-    return render json: subject, status: :ok if subject.valid?
-    render_errors(subject)
+    current_subject.update(subject_params)
+    return render_success(:ok, current_subject) if current_subject.valid?
+    render_error(:unprocessable_entity, current_subject.errors)
+  end
+
+  def destroy
+    return render_error(:not_found) if current_subject.nil?
+    current_subject.destroy
+    render_success(:no_content)
   end
 
   private
 
   def subject_params
-    params.require(:subject).permit(:name, :parent)
+    params.require(:subject).permit(:name, :parent_id)
   end
 
-  def render_errors(subject)
-    render json: { errors: subject.errors }, status: :unprocessable_entity
+  def current_subject
+    @current_subject ||= Subject.find_by_id(params[:id])
   end
 end
