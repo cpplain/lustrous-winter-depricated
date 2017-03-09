@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe SubjectsController, type: :controller do
-  describe 'GET resources#index' do
+  describe 'GET subjects#index' do
     before do
       @subject1 = FactoryGirl.create(:subject)
       @subject2 = FactoryGirl.create(:subject)
