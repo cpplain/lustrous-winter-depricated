@@ -55,18 +55,6 @@ RSpec.describe ResourcesController, type: :controller do
     end
   end
 
-  describe 'PUT resources#update' do
-    it 'should update a resource in the database' do
-      resource = FactoryGirl.create(:resource)
-      put :update, params: { id: resource.id, resource: { name: 'New Name' } }
-      expect(response).to have_http_status(:success)
-      response_value = ActiveSupport::JSON.decode(@response.body)
-      expect(response_value['name']).to eq('New Name')
-      resource.reload
-      expect(resource.name).to eq('New Name')
-    end
-  end
-
   describe 'PATCH resources#update' do
     context 'without errors' do
       before do
@@ -103,15 +91,6 @@ RSpec.describe ResourcesController, type: :controller do
       it 'returns HTTP status unprocessable entity' do
         expect(response).to have_http_status(:unprocessable_entity)
       end
-    end
-  end
-
-  describe 'DELETE resources#destroy' do
-    it 'should delete a resource from the database' do
-      resource = FactoryGirl.create(:resource)
-      delete :destroy, params: { id: resource.id }
-      expect(response).to have_http_status(:success)
-      expect(Resource.find_by_id(resource.id)).to eq(nil)
     end
   end
 

@@ -91,9 +91,9 @@ RSpec.describe SubjectsController, type: :controller do
 
     context 'without errors 2' do
       before do
-        @parent1 = FactoryGirl.create(:subject)
+        parent1 = FactoryGirl.create(:subject)
         @parent2 = FactoryGirl.create(:subject)
-        @child = FactoryGirl.create(:subject, parent_id: @parent1.id)
+        @child = FactoryGirl.create(:subject, parent_id: parent1.id)
         patch :update, params: { id: @child.id, subject: { parent_id: @parent2.id } }
         @child.reload
       end
@@ -105,8 +105,8 @@ RSpec.describe SubjectsController, type: :controller do
 
     context 'without errors 3' do
       before do
-        @parent = FactoryGirl.create(:subject)
-        @child = FactoryGirl.create(:subject, parent_id: @parent.id)
+        parent = FactoryGirl.create(:subject)
+        @child = FactoryGirl.create(:subject, parent_id: parent.id)
         patch :update, params: { id: @child.id, subject: { name: 'Parent', parent_id: nil } }
         @child.reload
       end
