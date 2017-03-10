@@ -22,7 +22,12 @@ RSpec.describe ResourcesController, type: :controller do
   describe 'POST resources#create' do
     context 'without errors' do
       before do
-        post :create, params: { resource: { name: 'Name', description: 'Description' } }
+        subject = FactoryGirl.create(:subject)
+        post :create, params: {
+          resource: {
+            name: 'Name', description: 'Description', subject_id: subject.id
+          }
+        }
         @json = JSON.parse(response.body)
       end
 
@@ -41,7 +46,7 @@ RSpec.describe ResourcesController, type: :controller do
 
     context 'with errors' do
       before do
-        post :create, params: { resource: { name: '', description: '' } }
+        post :create, params: { resource: { name: '' } }
         @json = JSON.parse(response.body)
       end
 
