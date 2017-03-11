@@ -57,3 +57,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.5'
   gem 'factory_girl_rails', '~> 4.0'
 end
+
+# Use audited to logs changes to models
+gem 'audited', '~> 4.3'
+gem 'rails-observers', github: 'rails/rails-observers'
