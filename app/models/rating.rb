@@ -1,6 +1,5 @@
 class Rating < ApplicationRecord
   audited
-  belongs_to :medium
-  belongs_to :review
+  belongs_to :morphic_rating, polymorphic: true
   validates :recommend, presence: true
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170314160535) do
+ActiveRecord::Schema.define(version: 20170314162619) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,10 +39,11 @@ ActiveRecord::Schema.define(version: 20170314160535) do
 
   create_table "ratings", force: :cascade do |t|
     t.boolean  "recommend"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer  "review_id"
-    t.index ["review_id"], name: "index_ratings_on_review_id", using: :btree
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+    t.string   "morphic_rating_type"
+    t.integer  "morphic_rating_id"
+    t.index ["morphic_rating_type", "morphic_rating_id"], name: "index_ratings_on_morphic_rating_type_and_morphic_rating_id", using: :btree
   end
 
   create_table "resources", force: :cascade do |t|
