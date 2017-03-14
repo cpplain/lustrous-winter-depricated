@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170311221735) do
+ActiveRecord::Schema.define(version: 20170314160535) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,28 +37,11 @@ ActiveRecord::Schema.define(version: 20170311221735) do
     t.index ["user_id", "user_type"], name: "user_index", using: :btree
   end
 
-  create_table "media", force: :cascade do |t|
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.string   "medium_type"
-    t.string   "provider"
-    t.string   "isbn"
-    t.string   "url"
-    t.string   "city"
-    t.string   "state"
-    t.string   "country"
-    t.boolean  "free"
-    t.integer  "resource_id"
-    t.index ["resource_id"], name: "index_media_on_resource_id", using: :btree
-  end
-
   create_table "ratings", force: :cascade do |t|
     t.boolean  "recommend"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer  "medium_id"
     t.integer  "review_id"
-    t.index ["medium_id"], name: "index_ratings_on_medium_id", using: :btree
     t.index ["review_id"], name: "index_ratings_on_review_id", using: :btree
   end
 
