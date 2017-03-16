@@ -25,7 +25,11 @@ RSpec.describe ResourcesController, type: :controller do
         subject = FactoryGirl.create(:subject)
         post :create, params: {
           resource: {
-            name: 'Name', description: 'Description', subject_id: subject.id
+            name: 'Name',
+            description: 'Description',
+            level: 'Beginner',
+            free: true,
+            subject_id: subject.id,
           }
         }
         @json = JSON.parse(response.body)

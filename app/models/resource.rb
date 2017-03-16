@@ -10,6 +10,7 @@ class Resource < ApplicationRecord
   has_many :cities, through: :locations
   validates :name, presence: true
   validates :description, presence: true
-  validates :level, presence: true
+  validates :level, inclusion: { in: %w(Beginner Intermediate Advanced),
+    message: "%{value} is not included in the list" }
   validates :free, presence: true
 end
