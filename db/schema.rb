@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170316031710) do
+ActiveRecord::Schema.define(version: 20170316040518) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -104,19 +104,12 @@ ActiveRecord::Schema.define(version: 20170316031710) do
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
     t.integer  "subject_id"
-    t.string   "medium"
-    t.string   "author"
     t.string   "isbn"
-    t.string   "organization"
     t.string   "url"
-    t.string   "city"
-    t.string   "state"
-    t.string   "country"
     t.boolean  "free"
     t.integer  "resource_type_id"
     t.integer  "organization_id"
-    t.integer  "author_id"
-    t.index ["author_id"], name: "index_resources_on_author_id", using: :btree
+    t.string   "level"
     t.index ["organization_id"], name: "index_resources_on_organization_id", using: :btree
     t.index ["resource_type_id"], name: "index_resources_on_resource_type_id", using: :btree
     t.index ["subject_id"], name: "index_resources_on_subject_id", using: :btree
