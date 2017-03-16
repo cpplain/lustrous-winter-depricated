@@ -18,4 +18,41 @@ RSpec.describe ResourceTypesController, type: :controller do
       expect(response).to have_http_status(:ok)
     end
   end
+
+  describe 'POST resource_types#create' do
+    context 'without errors' do
+      before do
+        post :create, params: { resource_type: { resource_type: 'Book' } }
+        @resource_type = ResourceType.last
+        @json = JSON.parse(response.body)
+      end
+
+      it 'saves a new resource_type to the database' do
+        expect(@resource_type.resource_type).to eq('Book')
+      end
+
+      it 'returns the created resource_type in the response body' do
+        expect(@json['resource_type']).to eq('Book')
+      end
+
+      it 'returns HTTP status created' do
+        expect(response).to have_http_status(:created)
+      end
+    end
+
+    context 'with errors' do
+      before do
+        post :create, params: { resource_type: { resource_type: '' } }
+        @json = JSON.parse(response.body)
+      end
+
+      it 'returns errors in the response body' do
+        expect(@json['errors']['resource_type']).to eq(["can't be blank"])
+      end
+
+      it 'returns HTTP status unprocessable entity' do
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+    end
+  end
 end
