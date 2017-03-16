@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170316021022) do
+ActiveRecord::Schema.define(version: 20170316022832) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,6 +35,12 @@ ActiveRecord::Schema.define(version: 20170316021022) do
     t.index ["created_at"], name: "index_audits_on_created_at", using: :btree
     t.index ["request_uuid"], name: "index_audits_on_request_uuid", using: :btree
     t.index ["user_id", "user_type"], name: "user_index", using: :btree
+  end
+
+  create_table "organizations", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "ratings", force: :cascade do |t|
@@ -68,6 +74,8 @@ ActiveRecord::Schema.define(version: 20170316021022) do
     t.string   "country"
     t.boolean  "free"
     t.integer  "resource_type_id"
+    t.integer  "organization_id"
+    t.index ["organization_id"], name: "index_resources_on_organization_id", using: :btree
     t.index ["resource_type_id"], name: "index_resources_on_resource_type_id", using: :btree
     t.index ["subject_id"], name: "index_resources_on_subject_id", using: :btree
   end
