@@ -10,6 +10,6 @@ class Resource < ApplicationRecord
   has_many :cities, through: :locations
   validates :name, presence: true
   validates :description, presence: true
-  validates :medium, presence: true
+  validates :level, presence: true
   validates :free, presence: true
 end
