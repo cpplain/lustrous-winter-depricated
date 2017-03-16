@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170314170001) do
+ActiveRecord::Schema.define(version: 20170316021022) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,11 +46,17 @@ ActiveRecord::Schema.define(version: 20170314170001) do
     t.index ["morphic_rating_type", "morphic_rating_id"], name: "index_ratings_on_morphic_rating_type_and_morphic_rating_id", using: :btree
   end
 
+  create_table "resource_types", force: :cascade do |t|
+    t.string   "resource_type"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
   create_table "resources", force: :cascade do |t|
     t.string   "name"
     t.text     "description"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
     t.integer  "subject_id"
     t.string   "medium"
     t.string   "author"
@@ -61,6 +67,8 @@ ActiveRecord::Schema.define(version: 20170314170001) do
     t.string   "state"
     t.string   "country"
     t.boolean  "free"
+    t.integer  "resource_type_id"
+    t.index ["resource_type_id"], name: "index_resources_on_resource_type_id", using: :btree
     t.index ["subject_id"], name: "index_resources_on_subject_id", using: :btree
   end
 
