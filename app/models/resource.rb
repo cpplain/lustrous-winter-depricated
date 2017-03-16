@@ -1,6 +1,6 @@
 class Resource < ApplicationRecord
-  audited
   belongs_to :subject
+  belongs_to :resource_type
   has_many :ratings, as: :morphic_rating
   has_many :reviews
   validates :name, presence: true
