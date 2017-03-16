@@ -62,7 +62,7 @@ RSpec.describe SubjectsController, type: :controller do
     end
   end
 
-  describe 'PATCH resources#update' do
+  describe 'PATCH subjects#update' do
     context 'without errors 1' do
       before do
         @parent = FactoryGirl.create(:subject)

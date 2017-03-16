@@ -55,4 +55,43 @@ RSpec.describe ResourceTypesController, type: :controller do
       end
     end
   end
+
+  describe 'PATCH resource_types#update' do
+    context 'without errors' do
+      before do
+        @resource_type = FactoryGirl.create(:resource_type)
+        patch :update, params: { id: @resource_type.id, resource_type: { resource_type: 'Course' } }
+        @resource_type.reload
+        @json = JSON.parse(response.body)
+      end
+
+      it 'saves updates to the database' do
+        expect(@resource_type.resource_type).to eq('Course')
+      end
+
+      it 'returns the updated resource_type in the response body' do
+        expect(@json['resource_type']).to eq('Course')
+      end
+
+      it 'returns HTTP status ok' do
+        expect(response).to have_http_status(:ok)
+      end
+    end
+
+    context 'with errors' do
+      before do
+        resource_type = FactoryGirl.create(:resource_type)
+        patch :update, params: { id: resource_type.id, resource_type: { resource_type: '' } }
+        @json = JSON.parse(response.body)
+      end
+
+      it 'returns errors in the response body' do
+        expect(@json['errors']['resource_type']).to eq(["can't be blank"])
+      end
+
+      it 'returns HTTP status unprocessable entity' do
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+    end
+  end
 end

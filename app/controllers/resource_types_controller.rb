@@ -9,9 +9,19 @@ class ResourceTypesController < ApplicationController
     render_error(:unprocessable_entity, resource_type.errors)
   end
 
+  def update
+    current_resource_type.update(resource_type_params)
+    return render_success(:ok, current_resource_type) if current_resource_type.valid?
+    render_error(:unprocessable_entity, current_resource_type.errors)
+  end
+
   private
 
   def resource_type_params
     params.require(:resource_type).permit(:resource_type)
+  end
+
+  def current_resource_type
+    @current_resource_type ||= ResourceType.find_by_id(params[:id])
   end
 end
