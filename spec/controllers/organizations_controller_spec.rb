@@ -94,4 +94,31 @@ RSpec.describe OrganizationsController, type: :controller do
       end
     end
   end
+
+  describe 'DELETE organizations#destroy' do
+    context 'without errors' do
+      before do
+        @organization = FactoryGirl.create(:organization)
+        delete :destroy, params: { id: @organization.id }
+      end
+
+      it 'deletes the organization from the databse' do
+        expect(Organization.find_by_id(@organization.id)).to eq(nil)
+      end
+
+      it 'returns HTTP status no content' do
+        expect(response).to have_http_status(:no_content)
+      end
+    end
+
+    context 'with errors' do
+      before do
+        delete :destroy, params: { id: 'no_id' }
+      end
+
+      it 'returns HTTP status not found' do
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+  end
 end

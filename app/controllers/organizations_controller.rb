@@ -15,6 +15,12 @@ class OrganizationsController < ApplicationController
     render_error(:unprocessable_entity, current_organization.errors)
   end
 
+  def destroy
+    return render_error(:not_found) if current_organization.nil?
+    current_organization.destroy
+    render_success(:no_content)
+  end
+
   private
 
   def organization_params
