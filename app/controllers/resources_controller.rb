@@ -29,7 +29,7 @@ class ResourcesController < ApplicationController
   private
 
   def resource_params
-    params.require(:resource).permit(:name, :description, :subject_id)
+    params.require(:resource).permit(:name, :description, :level, :free, :subject_id)
   end
 
   def current_resource
