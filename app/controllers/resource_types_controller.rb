@@ -15,6 +15,12 @@ class ResourceTypesController < ApplicationController
     render_error(:unprocessable_entity, current_resource_type.errors)
   end
 
+  def destroy
+    return render_error(:not_found) if current_resource_type.nil?
+    current_resource_type.destroy
+    render_success(:no_content)
+  end
+
   private
 
   def resource_type_params

@@ -94,4 +94,31 @@ RSpec.describe ResourceTypesController, type: :controller do
       end
     end
   end
+
+  describe 'DELETE resource_types#destroy' do
+    context 'without errors' do
+      before do
+        @resource_type = FactoryGirl.create(:resource_type)
+        delete :destroy, params: { id: @resource_type.id }
+      end
+
+      it 'deletes the resource_type from the databse' do
+        expect(ResourceType.find_by_id(@resource_type.id)).to eq(nil)
+      end
+
+      it 'returns HTTP status no content' do
+        expect(response).to have_http_status(:no_content)
+      end
+    end
+
+    context 'with errors' do
+      before do
+        delete :destroy, params: { id: 'no_id' }
+      end
+
+      it 'returns HTTP status not found' do
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+  end
 end
