@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170316022832) do
+ActiveRecord::Schema.define(version: 20170316025528) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,6 +37,14 @@ ActiveRecord::Schema.define(version: 20170316022832) do
     t.index ["user_id", "user_type"], name: "user_index", using: :btree
   end
 
+  create_table "authors", force: :cascade do |t|
+    t.string   "first"
+    t.string   "middle"
+    t.string   "last"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "organizations", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
@@ -50,6 +58,15 @@ ActiveRecord::Schema.define(version: 20170316022832) do
     t.string   "morphic_rating_type"
     t.integer  "morphic_rating_id"
     t.index ["morphic_rating_type", "morphic_rating_id"], name: "index_ratings_on_morphic_rating_type_and_morphic_rating_id", using: :btree
+  end
+
+  create_table "resource_authors", force: :cascade do |t|
+    t.integer  "resource_id"
+    t.integer  "author_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["author_id"], name: "index_resource_authors_on_author_id", using: :btree
+    t.index ["resource_id"], name: "index_resource_authors_on_resource_id", using: :btree
   end
 
   create_table "resource_types", force: :cascade do |t|
@@ -75,6 +92,8 @@ ActiveRecord::Schema.define(version: 20170316022832) do
     t.boolean  "free"
     t.integer  "resource_type_id"
     t.integer  "organization_id"
+    t.integer  "author_id"
+    t.index ["author_id"], name: "index_resources_on_author_id", using: :btree
     t.index ["organization_id"], name: "index_resources_on_organization_id", using: :btree
     t.index ["resource_type_id"], name: "index_resources_on_resource_type_id", using: :btree
     t.index ["subject_id"], name: "index_resources_on_subject_id", using: :btree
@@ -96,4 +115,6 @@ ActiveRecord::Schema.define(version: 20170316022832) do
     t.index ["parent_id"], name: "index_subjects_on_parent_id", using: :btree
   end
 
+  add_foreign_key "resource_authors", "authors"
+  add_foreign_key "resource_authors", "resources"
 end
