@@ -18,4 +18,41 @@ RSpec.describe OrganizationsController, type: :controller do
       expect(response).to have_http_status(:ok)
     end
   end
+
+  describe 'POST organizations#create' do
+    context 'without errors' do
+      before do
+        post :create, params: { organization: { name: 'Org' } }
+        @organization = Organization.last
+        @json = JSON.parse(response.body)
+      end
+
+      it 'saves a new organization to the database' do
+        expect(@organization.name).to eq('Org')
+      end
+
+      it 'returns the created organization in the response body' do
+        expect(@json['name']).to eq('Org')
+      end
+
+      it 'returns HTTP status created' do
+        expect(response).to have_http_status(:created)
+      end
+    end
+
+    context 'with errors' do
+      before do
+        post :create, params: { organization: { name: '' } }
+        @json = JSON.parse(response.body)
+      end
+
+      it 'returns errors in the response body' do
+        expect(@json['errors']['name']).to eq(["can't be blank"])
+      end
+
+      it 'returns HTTP status unprocessable entity' do
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+    end
+  end
 end
