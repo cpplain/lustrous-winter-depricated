@@ -18,4 +18,41 @@ RSpec.describe AuthorsController, type: :controller do
       expect(response).to have_http_status(:ok)
     end
   end
+
+  describe 'POST authors#create' do
+    context 'without errors' do
+      before do
+        post :create, params: { author: { first: 'First', last: 'Last' } }
+        @author = Author.last
+        @json = JSON.parse(response.body)
+      end
+
+      it 'saves a new author to the database' do
+        expect(@author.first).to eq('First')
+      end
+
+      it 'returns the created author in the response body' do
+        expect(@json['first']).to eq('First')
+      end
+
+      it 'returns HTTP status created' do
+        expect(response).to have_http_status(:created)
+      end
+    end
+
+    context 'with errors' do
+      before do
+        post :create, params: { author: { first: '' } }
+        @json = JSON.parse(response.body)
+      end
+
+      it 'returns errors in the response body' do
+        expect(@json['errors']['first']).to eq(["can't be blank"])
+      end
+
+      it 'returns HTTP status unprocessable entity' do
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+    end
+  end
 end
