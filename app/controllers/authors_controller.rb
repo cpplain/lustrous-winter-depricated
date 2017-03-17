@@ -15,6 +15,12 @@ class AuthorsController < ApplicationController
     render_error(:unprocessable_entity, current_author.errors)
   end
 
+  def destroy
+    return render_error(:not_found) if current_author.nil?
+    current_author.destroy
+    render_success(:no_content)
+  end
+
   private
 
   def author_params

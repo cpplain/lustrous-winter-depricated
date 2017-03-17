@@ -94,4 +94,31 @@ RSpec.describe AuthorsController, type: :controller do
       end
     end
   end
+
+  describe 'DELETE authors#destroy' do
+    context 'without errors' do
+      before do
+        @author = FactoryGirl.create(:author)
+        delete :destroy, params: { id: @author.id }
+      end
+
+      it 'deletes the author from the databse' do
+        expect(Author.find_by_id(@author.id)).to eq(nil)
+      end
+
+      it 'returns HTTP status no content' do
+        expect(response).to have_http_status(:no_content)
+      end
+    end
+
+    context 'with errors' do
+      before do
+        delete :destroy, params: { id: 'no_id' }
+      end
+
+      it 'returns HTTP status not found' do
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+  end
 end
