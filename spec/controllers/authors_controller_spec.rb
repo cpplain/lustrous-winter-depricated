@@ -55,4 +55,43 @@ RSpec.describe AuthorsController, type: :controller do
       end
     end
   end
+
+  describe 'PATCH authors#update' do
+    context 'without errors' do
+      before do
+        @author = FactoryGirl.create(:author)
+        patch :update, params: { id: @author.id, author: { first: 'Updated' } }
+        @author.reload
+        @json = JSON.parse(response.body)
+      end
+
+      it 'saves updates to the database' do
+        expect(@author.first).to eq('Updated')
+      end
+
+      it 'returns the updated author in the response body' do
+        expect(@json['first']).to eq('Updated')
+      end
+
+      it 'returns HTTP status ok' do
+        expect(response).to have_http_status(:ok)
+      end
+    end
+
+    context 'with errors' do
+      before do
+        author = FactoryGirl.create(:author)
+        patch :update, params: { id: author.id, author: { first: '' } }
+        @json = JSON.parse(response.body)
+      end
+
+      it 'returns errors in the response body' do
+        expect(@json['errors']['first']).to eq(["can't be blank"])
+      end
+
+      it 'returns HTTP status unprocessable entity' do
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+    end
+  end
 end

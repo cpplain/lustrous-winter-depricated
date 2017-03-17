@@ -4,5 +4,5 @@ Rails.application.routes.draw do
   resources :subjects, only: [:index, :create, :update, :destroy]
   resources :resource_types, only: [:index, :create, :update, :destroy]
   resources :organizations, only: [:index, :create, :update, :destroy]
-  resources :authors, only: [:index, :create]
+  resources :authors, only: [:index, :create, :update]
 end
