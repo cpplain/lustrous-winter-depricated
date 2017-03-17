@@ -1,7 +1,9 @@
 FactoryGirl.define do
   factory :author do
-    first "MyString"
-    middle "MyString"
-    last "MyString"
+    first 'First'
+    sequence :middle do |n|
+      "Middle#{n}"
+    end
+    last 'Last'
   end
 end
